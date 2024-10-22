@@ -11,7 +11,6 @@ class ShopViewController: UIViewController {
 
     var scrap = 0
     var money = 0
-    var worth = 1
     @IBOutlet weak var scrapAmount: UILabel!
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var scrapLabel: UILabel!
@@ -21,13 +20,16 @@ class ShopViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         scrapLabel.text = "Scrap: \(scrap)"
         moneyLabel.text = "Money: \(money)"
-
+        ringLabel.text = "ring this to sell scrap for \(Info.worth)"
     }
     
     @IBAction func ringButton(_ sender: UIButton) {
-        money = money + (scrap * worth)
+        print("w\(Info.worth)")
+        money = money + (scrap * Info.worth)
+        print("m\(money)")
         Info.moneyy = money
         scrap = 0
         Info.scrapp = 0
@@ -37,30 +39,35 @@ class ShopViewController: UIViewController {
     
     @IBAction func TenButton(_ sender: UIButton) {
         if money >= 10 {
-            worth = worth + 1
+            Info.worth = (Info.worth + 1)
             money = money - 10
             Info.moneyy = money
             moneyLabel.text = "Money: \(money)"
+            ringLabel.text = "ring this to sell scrap for \(Info.worth)"
         } else {
             broke(alertName: "You dont have enough money")
         }
     }
     @IBAction func HunButton(_ sender: UIButton) {
         if money >= 100 {
-            worth = worth * 2
+            Info.worth = (Info.worth * 2)
             money = money - 100
             Info.moneyy = money
             moneyLabel.text = "Money: \(money)"
+            ringLabel.text = "ring this to sell scrap for \(Info.worth)"
         }else {
             broke(alertName: "You dont have enough money")
         }
     }
     @IBAction func WinButton(_ sender: UIButton) {
-        if money >= 10000{
-            win(alertName: "Wowie u became ceo :)")
+        if money >= 0{
+            win(alertName: "Wowie \(Info.name) became ceo :) now go touch actual money")
             money = money - 10000
             Info.moneyy = money
             moneyLabel.text = "Money: \(money)"
+            let timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { timer in
+                exit(0)
+                }
 
         }else {
             broke(alertName: "You dont have enough money")
